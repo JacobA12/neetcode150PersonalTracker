@@ -1,4 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import Header from "./components/Header";
+import ProgressSection from "./components/ProgressSection";
+import Controls from "./components/Controls";
+import CategorySection from "./components/CategorySection";
+import LogAttemptModal from "./components/LogAttemptModal";
 import { PROBLEMS } from "./problems";
 
 const STORAGE_KEY = "nc150v2";
@@ -24,54 +29,8 @@ function addDays(n) {
   return dt.toISOString().split("T")[0];
 }
 
-function lcSlug(name) {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "-");
-}
-
-function TagInput({ tags, onAdd, onRemove }) {
-  const [value, setValue] = useState("");
-
-  return (
-    <div className="tags-input-wrap">
-      {tags.map((tag) => (
-        <span key={tag} className="tag-chip">
-          {tag}
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              onRemove(tag);
-            }}
-          >
-            x
-          </button>
-        </span>
-      ))}
-      <input
-        className="tags-text-input"
-        value={value}
-        placeholder="Add technique..."
-        onChange={(event) => setValue(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === ",") {
-            event.preventDefault();
-            onAdd(value);
-            setValue("");
-          }
-          if (event.key === "Backspace" && !value && tags.length) {
-            onRemove(tags[tags.length - 1]);
-          }
-        }}
-      />
-    </div>
-  );
 }
 
 export default function App() {
@@ -298,100 +257,22 @@ export default function App() {
 
   return (
     <div className="app">
-      <header>
-        <div className="logo">
-          <div className="logo-text">
-            NeetCode <span>150</span>
-          </div>
-        </div>
-        <div className="header-right">
-          <button className="text-btn" onClick={resetAll}>
-            Reset
-          </button>
-          <button
-            className="icon-btn"
-            aria-label="Toggle theme"
-            onClick={() =>
-              setTheme((prev) => (prev === "dark" ? "light" : "dark"))
-            }
-          >
-            {theme === "dark" ? "☀" : "☾"}
-          </button>
-        </div>
-      </header>
+      <Header
+        theme={theme}
+        onToggleTheme={() =>
+          setTheme((prev) => (prev === "dark" ? "light" : "dark"))
+        }
+        onResetAll={resetAll}
+      />
 
-      <section className="progress-section">
-        <div className="stats-row">
-          <div className="stat total">
-            <span className="stat-num">{stats.attempted}</span>
-            <span className="stat-label"> / {stats.total} attempted</span>
-          </div>
-          <div className="stat mastered-stat">
-            <span className="stat-num">{stats.mastered}</span>
-            <span className="stat-label"> mastered</span>
-          </div>
-          <div className="stat review-stat">
-            <span className="stat-num">{stats.review}</span>
-            <span className="stat-label"> in review</span>
-          </div>
-          <div className="stat due-stat">
-            <span className="stat-num">{stats.due}</span>
-            <span className="stat-label"> due today</span>
-          </div>
-        </div>
-        <div className="progress-bars">
-          <div className="progress-row">
-            <div className="progress-track">
-              <div
-                className="progress-fill easy"
-                style={{ width: `${(stats.easy / stats.total) * 100}%` }}
-              />
-              <div
-                className="progress-fill medium"
-                style={{ width: `${(stats.medium / stats.total) * 100}%` }}
-              />
-              <div
-                className="progress-fill hard"
-                style={{ width: `${(stats.hard / stats.total) * 100}%` }}
-              />
-            </div>
-            <div className="progress-label">
-              {stats.mastered} / {stats.total} mastered
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProgressSection stats={stats} />
 
-      <section className="controls">
-        <div className="search-wrap">
-          <input
-            type="search"
-            id="search"
-            placeholder="Search problems..."
-            value={currentSearch}
-            onChange={(event) => setCurrentSearch(event.target.value)}
-          />
-        </div>
-        <div className="filter-chips">
-          {[
-            { key: "all", label: "All" },
-            { key: "due", label: "Due" },
-            { key: "easy", label: "Easy" },
-            { key: "medium", label: "Med" },
-            { key: "hard", label: "Hard" },
-            { key: "mastered", label: "Mastered" },
-            { key: "new", label: "New" },
-          ].map((chip) => (
-            <button
-              key={chip.key}
-              className={`chip ${chip.key} ${currentFilter === chip.key ? "active" : ""}`}
-              onClick={() => setCurrentFilter(chip.key)}
-            >
-              {chip.label}
-            </button>
-          ))}
-        </div>
-      </section>
+      <Controls
+        currentSearch={currentSearch}
+        currentFilter={currentFilter}
+        onSearchChange={setCurrentSearch}
+        onFilterChange={setCurrentFilter}
+      />
 
       <main>
         {filteredCategories.length === 0 && (
@@ -402,307 +283,34 @@ export default function App() {
 
         {filteredCategories.map((cat) => {
           const catSlug = slugify(cat.cat);
-          const dueInCat = cat.problems.filter((p) => isDue(p.id)).length;
-          const doneCount = cat.problems.filter(
-            (p) => getRec(p.id).status !== "new",
-          ).length;
-          const masteredCount = cat.problems.filter(
-            (p) => getRec(p.id).status === "mastered",
-          ).length;
-          const total = cat.problems.length;
-          const pct = doneCount / total;
-          const circ = 2 * Math.PI * 14;
 
           return (
-            <section
-              className={`category ${collapsedCats.has(catSlug) ? "collapsed" : ""}`}
+            <CategorySection
               key={cat.cat}
-            >
-              <div
-                className="category-header"
-                onClick={() => toggleCat(catSlug)}
-              >
-                <span className="cat-icon">{cat.icon}</span>
-                <span className="cat-title">{cat.cat}</span>
-                <div className="cat-meta">
-                  {dueInCat > 0 && (
-                    <span className="cat-due-badge">{dueInCat} due</span>
-                  )}
-                  <div className="cat-progress-ring">
-                    <svg width="38" height="38" viewBox="0 0 38 38">
-                      <circle className="ring-bg" cx="19" cy="19" r="14" />
-                      <circle
-                        className="ring-fill"
-                        cx="19"
-                        cy="19"
-                        r="14"
-                        style={{
-                          strokeDasharray: circ,
-                          strokeDashoffset: circ * (1 - pct),
-                        }}
-                      />
-                    </svg>
-                    <div className="ring-label">
-                      {masteredCount}/{total}
-                    </div>
-                  </div>
-                  <span className="collapse-arrow">▾</span>
-                </div>
-              </div>
-
-              <div className="problems-list">
-                {cat.problems.map((p) => {
-                  const rec = getRec(p.id);
-                  const expanded = expandedCards.has(p.id);
-
-                  return (
-                    <article
-                      key={p.id}
-                      className={`problem-card status-${rec.status} ${expanded ? "expanded" : ""}`}
-                    >
-                      <div
-                        className="problem-row"
-                        onClick={() => toggleCard(p.id)}
-                      >
-                        <div className="check-wrap">
-                          <div className="check-btn">
-                            {rec.status !== "new" ? "✓" : ""}
-                          </div>
-                        </div>
-                        <div className="problem-title-wrap">
-                          <div className="problem-name">{p.name}</div>
-                        </div>
-                        <span className={`diff-badge ${p.diff}`}>{p.diff}</span>
-                        {statusBadge(rec.status)}
-                        {duePill(p.id)}
-                        <span className="expand-arrow">▾</span>
-                      </div>
-
-                      <div className="detail-panel">
-                        <div className="detail-grid">
-                          <div className="field-group">
-                            <label
-                              className="field-label"
-                              htmlFor={`tc-${p.id}`}
-                            >
-                              Time Complexity
-                            </label>
-                            <input
-                              id={`tc-${p.id}`}
-                              className="field-input mono-input"
-                              value={rec.timeComplexity || ""}
-                              onChange={(event) =>
-                                updateRec(p.id, (curr) => ({
-                                  ...curr,
-                                  timeComplexity: event.target.value,
-                                }))
-                              }
-                              placeholder="e.g. O(n log n)"
-                            />
-                          </div>
-
-                          <div className="field-group">
-                            <label
-                              className="field-label"
-                              htmlFor={`sc-${p.id}`}
-                            >
-                              Space Complexity
-                            </label>
-                            <input
-                              id={`sc-${p.id}`}
-                              className="field-input mono-input"
-                              value={rec.spaceComplexity || ""}
-                              onChange={(event) =>
-                                updateRec(p.id, (curr) => ({
-                                  ...curr,
-                                  spaceComplexity: event.target.value,
-                                }))
-                              }
-                              placeholder="e.g. O(n)"
-                            />
-                          </div>
-
-                          <div className="field-group full">
-                            <label className="field-label">
-                              Techniques & Algorithms
-                            </label>
-                            <TagInput
-                              tags={rec.techniques || []}
-                              onAdd={(tag) => {
-                                const trimmed = tag.trim();
-                                if (!trimmed) return;
-                                updateRec(p.id, (curr) => {
-                                  const nextTags = curr.techniques || [];
-                                  if (nextTags.includes(trimmed)) return curr;
-                                  return {
-                                    ...curr,
-                                    techniques: [...nextTags, trimmed],
-                                  };
-                                });
-                              }}
-                              onRemove={(tag) => {
-                                updateRec(p.id, (curr) => ({
-                                  ...curr,
-                                  techniques: (curr.techniques || []).filter(
-                                    (t) => t !== tag,
-                                  ),
-                                }));
-                              }}
-                            />
-                          </div>
-
-                          <div className="field-group full">
-                            <label
-                              className="field-label"
-                              htmlFor={`exp-${p.id}`}
-                            >
-                              Solution Explanation
-                            </label>
-                            <textarea
-                              id={`exp-${p.id}`}
-                              className="field-input tall"
-                              value={rec.explanation || ""}
-                              onChange={(event) =>
-                                updateRec(p.id, (curr) => ({
-                                  ...curr,
-                                  explanation: event.target.value,
-                                }))
-                              }
-                              placeholder="Explain the key idea and edge cases..."
-                            />
-                          </div>
-
-                          <div className="field-group full">
-                            <label
-                              className="field-label"
-                              htmlFor={`gh-${p.id}`}
-                            >
-                              GitHub Link
-                            </label>
-                            <input
-                              id={`gh-${p.id}`}
-                              className="field-input"
-                              type="url"
-                              value={rec.githubUrl || ""}
-                              onChange={(event) =>
-                                updateRec(p.id, (curr) => ({
-                                  ...curr,
-                                  githubUrl: event.target.value,
-                                }))
-                              }
-                              placeholder="https://github.com/..."
-                            />
-                          </div>
-
-                          <div className="field-group full">
-                            <label
-                              className="field-label"
-                              htmlFor={`notes-${p.id}`}
-                            >
-                              Additional Notes
-                            </label>
-                            <textarea
-                              id={`notes-${p.id}`}
-                              className="field-input"
-                              value={rec.notes || ""}
-                              onChange={(event) =>
-                                updateRec(p.id, (curr) => ({
-                                  ...curr,
-                                  notes: event.target.value,
-                                }))
-                              }
-                              placeholder="Gotchas and reminders..."
-                            />
-                          </div>
-                        </div>
-
-                        <div className="detail-actions">
-                          <button
-                            className="btn btn-primary"
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              setModalProbId(p.id);
-                            }}
-                          >
-                            Log Attempt
-                          </button>
-                          <a
-                            className="btn btn-outline"
-                            target="_blank"
-                            rel="noreferrer"
-                            href={`https://leetcode.com/problems/${lcSlug(p.name)}/`}
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            LeetCode
-                          </a>
-                          <a
-                            className="btn btn-outline"
-                            target="_blank"
-                            rel="noreferrer"
-                            href={`https://neetcode.io/problems/${lcSlug(p.name)}`}
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            NeetCode
-                          </a>
-                          {rec.status === "review" && isDue(p.id) && (
-                            <button
-                              className="btn btn-success"
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                markMasteredDirect(p.id);
-                              }}
-                            >
-                              Mark Mastered
-                            </button>
-                          )}
-                          <button
-                            className="btn btn-ghost"
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              resetProblem(p.id);
-                            }}
-                          >
-                            Reset
-                          </button>
-                          <span className="action-hint">#{p.id}</span>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
+              cat={cat}
+              collapsed={collapsedCats.has(catSlug)}
+              toggleCat={() => toggleCat(catSlug)}
+              getRec={getRec}
+              isDue={isDue}
+              expandedCards={expandedCards}
+              toggleCard={toggleCard}
+              statusBadge={statusBadge}
+              duePill={duePill}
+              updateRec={updateRec}
+              setModalProbId={setModalProbId}
+              markMasteredDirect={markMasteredDirect}
+              resetProblem={resetProblem}
+            />
           );
         })}
       </main>
 
       {modalProbId && (
-        <div className="modal-backdrop" onClick={() => setModalProbId(null)}>
-          <div className="modal" onClick={(event) => event.stopPropagation()}>
-            <h2>Log Attempt</h2>
-            <p>Did you solve this on your own?</p>
-            <div className="modal-actions">
-              <button
-                className="btn btn-success"
-                onClick={() => logAttempt(true)}
-              >
-                Solved solo
-              </button>
-              <button
-                className="btn btn-warning"
-                onClick={() => logAttempt(false)}
-              >
-                Used solution
-              </button>
-            </div>
-            <button
-              className="btn btn-outline full"
-              onClick={() => setModalProbId(null)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+        <LogAttemptModal
+          onSolo={() => logAttempt(true)}
+          onHelped={() => logAttempt(false)}
+          onClose={() => setModalProbId(null)}
+        />
       )}
     </div>
   );
