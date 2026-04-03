@@ -4,20 +4,8 @@ import ProgressSection from "./components/ProgressSection";
 import Controls from "./components/Controls";
 import CategorySection from "./components/CategorySection";
 import LogAttemptModal from "./components/LogAttemptModal";
+import useTrackerData from "./hooks/useTrackerData";
 import { PROBLEMS } from "./problems";
-
-const STORAGE_KEY = "nc150v2";
-const DEFAULT_REC = {
-  status: "new",
-  nextReview: null,
-  attempts: [],
-  timeComplexity: "",
-  spaceComplexity: "",
-  explanation: "",
-  techniques: [],
-  githubUrl: "",
-  notes: "",
-};
 
 function today() {
   return new Date().toISOString().split("T")[0];
@@ -39,14 +27,8 @@ export default function App() {
     [],
   );
 
-  const [data, setData] = useState(() => {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      return typeof parsed === "object" && parsed ? parsed : {};
-    } catch {
-      return {};
-    }
-  });
+  const { data, isLoaded, getRec, updateRec, resetProblem, resetAll } =
+    useTrackerData();
   const [currentFilter, setCurrentFilter] = useState("all");
   const [currentSearch, setCurrentSearch] = useState("");
   const [expandedCards, setExpandedCards] = useState(new Set());
@@ -60,37 +42,8 @@ export default function App() {
   );
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
-
-  const getRec = (id) => ({ ...DEFAULT_REC, ...(data[id] || {}) });
-
-  const updateRec = (id, updater) => {
-    setData((prev) => {
-      const next = { ...DEFAULT_REC, ...(prev[id] || {}) };
-      const updated = updater(next);
-      return { ...prev, [id]: updated };
-    });
-  };
-
-  const resetAll = () => {
-    if (!window.confirm("Reset ALL progress?")) return;
-    setData({});
-    setExpandedCards(new Set());
-  };
-
-  const resetProblem = (id) => {
-    if (!window.confirm("Reset this problem's progress?")) return;
-    setData((prev) => {
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
-  };
 
   const isDue = (id) => {
     const rec = getRec(id);
@@ -156,6 +109,17 @@ export default function App() {
     if (!window.confirm("Mark as fully mastered?")) return;
     updateRec(id, (rec) => ({ ...rec, status: "mastered", nextReview: null }));
     spawnBurst(false);
+  };
+
+  const handleResetAll = () => {
+    if (!window.confirm("Reset ALL progress?")) return;
+    resetAll();
+    setExpandedCards(new Set());
+  };
+
+  const handleResetProblem = (id) => {
+    if (!window.confirm("Reset this problem's progress?")) return;
+    resetProblem(id);
   };
 
   const toggleCard = (id) => {
@@ -262,7 +226,7 @@ export default function App() {
         onToggleTheme={() =>
           setTheme((prev) => (prev === "dark" ? "light" : "dark"))
         }
-        onResetAll={resetAll}
+        onResetAll={handleResetAll}
       />
 
       <ProgressSection stats={stats} />
@@ -275,7 +239,7 @@ export default function App() {
       />
 
       <main>
-        {filteredCategories.length === 0 && (
+        {isLoaded && filteredCategories.length === 0 && (
           <div className="empty-state">
             <p>No problems match your filters.</p>
           </div>
@@ -299,7 +263,7 @@ export default function App() {
               updateRec={updateRec}
               setModalProbId={setModalProbId}
               markMasteredDirect={markMasteredDirect}
-              resetProblem={resetProblem}
+              resetProblem={handleResetProblem}
             />
           );
         })}
