@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeetCode 150 — Learning Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --space-1: .25rem;
+      --space-2: .5rem;
+      --space-3: .75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --radius-sm: .375rem;
+      --radius-md: .5rem;
+      --radius-lg: .75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    :root,
+    [data-theme="light"] {
+      --bg: #f7f6f2;
+      --surface: #fafaf8;
+      --surface-2: #ffffff;
+      --surface-offset: #f0ede8;
+      --surface-accent: #e8f0ef;
+      --border: #e0ddd8;
+      --divider: #ece9e4;
+      --text: #1a1916;
+      --text-muted: #6b6a66;
+      --text-faint: #b0aea9;
+      --text-inverse: #f9f8f4;
+      --primary: #01696f;
+      --primary-hover: #0c4e54;
+      --primary-active: #0f3638;
+      --primary-hl: #d0e0dd;
+      --success: #437a22;
+      --success-hl: #d8edcc;
+      --success-hover: #2e5c10;
+      --warning: #b07a00;
+      --warning-hl: #f0e5c0;
+      --warning-dark: #7a5500;
+      --error: #a12c7b;
+      --error-hl: #edd5e8;
+      --review: #5060c0;
+      --review-hl: #dde0f5;
+      --mastered: #01696f;
+      --mastered-hl: #d0e0dd;
+      --easy: #437a22;
+      --easy-bg: #eaf4e2;
+      --medium: #b07a00;
+      --medium-bg: #fdf4d0;
+      --hard: #c0392b;
+      --hard-bg: #fce8e4;
+      --shadow-sm: 0 1px 3px oklch(0.2 0.01 80/0.07);
+      --shadow-md: 0 4px 16px oklch(0.2 0.01 80/0.09);
+      --shadow-lg: 0 8px 32px oklch(0.2 0.01 80/0.12);
+    }
+
+    [data-theme="dark"] {
+      --bg: #111010;
+      --surface: #181715;
+      --surface-2: #1e1d1b;
+      --surface-offset: #1a1918;
+      --surface-accent: #1e2828;
+      --border: #2a2927;
+      --divider: #222120;
+      --text: #d4d2cf;
+      --text-muted: #7a7875;
+      --text-faint: #4a4946;
+      --text-inverse: #1a1917;
+      --primary: #4f98a3;
+      --primary-hover: #227f8b;
+      --primary-active: #1a626b;
+      --primary-hl: #1e3535;
+      --success: #6daa45;
+      --success-hl: #1e3018;
+      --success-hover: #4d8f25;
+      --warning: #e8af34;
+      --warning-hl: #302810;
+      --warning-dark: #f0c84a;
+      --error: #d163a7;
+      --error-hl: #321830;
+      --review: #8896e8;
+      --review-hl: #1e2245;
+      --mastered: #4f98a3;
+      --mastered-hl: #1e3535;
+      --easy: #6daa45;
+      --easy-bg: #1a2e10;
+      --medium: #e8af34;
+      --medium-bg: #2a2008;
+      --hard: #e06060;
+      --hard-bg: #2a1010;
+      --shadow-sm: 0 1px 3px oklch(0 0 0/0.3);
+      --shadow-md: 0 4px 16px oklch(0 0 0/0.4);
+      --shadow-lg: 0 8px 32px oklch(0 0 0/0.5);
+    }
+
+    @media(prefers-color-scheme:dark) {
+      :root:not([data-theme]) {
+        --bg: #111010;
+        --surface: #181715;
+        --surface-2: #1e1d1b;
+        --surface-offset: #1a1918;
+        --surface-accent: #1e2828;
+        --border: #2a2927;
+        --divider: #222120;
+        --text: #d4d2cf;
+        --text-muted: #7a7875;
+        --text-faint: #4a4946;
+        --text-inverse: #1a1917;
+        --primary: #4f98a3;
+        --primary-hover: #227f8b;
+        --primary-active: #1a626b;
+        --primary-hl: #1e3535;
+        --success: #6daa45;
+        --success-hl: #1e3018;
+        --success-hover: #4d8f25;
+        --warning: #e8af34;
+        --warning-hl: #302810;
+        --warning-dark: #f0c84a;
+        --error: #d163a7;
+        --error-hl: #321830;
+        --review: #8896e8;
+        --review-hl: #1e2245;
+        --mastered: #4f98a3;
+        --mastered-hl: #1e3535;
+        --easy: #6daa45;
+        --easy-bg: #1a2e10;
+        --medium: #e8af34;
+        --medium-bg: #2a2008;
+        --hard: #e06060;
+        --hard-bg: #2a1010;
+        --shadow-sm: 0 1px 3px oklch(0 0 0/0.3);
+        --shadow-md: 0 4px 16px oklch(0 0 0/0.4);
+        --shadow-lg: 0 8px 32px oklch(0 0 0/0.5);
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100dvh;
+      line-height: 1.6;
+    }
+
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select {
+      transition: color var(--transition), background var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    button {
+      cursor: pointer;
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+    }
+
+    textarea,
+    input {
+      font: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-3) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-shrink: 0;
+    }
+
+    .logo svg {
+      color: var(--primary);
+    }
+
+    .logo-text {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .logo-text span {
+      color: var(--primary);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-left: auto;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+    }
+
+    .icon-btn:hover {
+      background: var(--surface-offset);
+      color: var(--text);
+    }
+
+    .text-btn {
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .text-btn:hover {
+      background: var(--surface-offset);
+      color: var(--text);
+    }
+
+    /* ── PROGRESS HEADER ── */
+    .progress-section {
+      background: var(--surface);
+      border-bottom: 1px solid var(--divider);
+      padding: var(--space-4) var(--space-6);
+    }
+
+    .stats-row {
+      display: flex;
+      gap: var(--space-6);
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-3);
+    }
+
+    .stat {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-1);
+    }
+
+    .stat-num {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+
+    .stat.total .stat-num {
+      color: var(--primary);
+    }
+
+    .stat.review-stat .stat-num {
+      color: var(--review);
+    }
+
+    .stat.mastered-stat .stat-num {
+      color: var(--mastered);
+    }
+
+    .stat.due-stat .stat-num {
+      color: var(--warning);
+    }
+
+    .progress-bars {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: var(--surface-offset);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .progress-fill.easy {
+      background: var(--easy);
+    }
+
+    .progress-fill.medium {
+      background: var(--warning-dark);
+    }
+
+    .progress-fill.hard {
+      background: var(--hard);
+    }
+
+    .progress-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      width: 90px;
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+
+    /* ── CONTROLS ── */
+    .controls {
+      padding: var(--space-3) var(--space-6);
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      flex-wrap: wrap;
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 180px;
+      max-width: 340px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-faint);
+      pointer-events: none;
+    }
+
+    #search {
+      width: 100%;
+      padding: var(--space-2) var(--space-3) var(--space-2) calc(var(--space-3) + 18px + var(--space-2));
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      color: var(--text);
+      outline: none;
+    }
+
+    #search:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px oklch(from var(--primary) l c h/0.15);
+    }
+
+    #search::placeholder {
+      color: var(--text-faint);
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-size: var(--text-xs);
+      padding: 3px var(--space-3);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--surface);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .chip.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .chip.easy.active {
+      background: var(--easy);
+      border-color: var(--easy);
+      color: white;
+    }
+
+    .chip.medium.active {
+      background: var(--warning-dark);
+      border-color: var(--warning-dark);
+      color: white;
+    }
+
+    .chip.hard.active {
+      background: var(--hard);
+      border-color: var(--hard);
+      color: white;
+    }
+
+    .chip.due.active {
+      background: var(--warning);
+      border-color: var(--warning);
+      color: var(--text-inverse);
+    }
+
+    .chip.mastered-chip.active {
+      background: var(--mastered);
+      border-color: var(--mastered);
+      color: white;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      padding: var(--space-6);
+      max-width: 1300px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── CATEGORY ── */
+    .category {
+      margin-bottom: var(--space-10);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--divider);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .category-header:hover .cat-title {
+      color: var(--primary);
+    }
+
+    .cat-icon {
+      font-size: 1.1rem;
+    }
+
+    .cat-title {
+      font-size: var(--text-base);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      flex: 1;
+    }
+
+    .cat-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .cat-progress-ring {
+      position: relative;
+      width: 38px;
+      height: 38px;
+    }
+
+    .cat-progress-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 3;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 3;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ring-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .collapse-arrow {
+      color: var(--text-faint);
+      transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+
+    .category.collapsed .collapse-arrow {
+      transform: rotate(-90deg);
+    }
+
+    .category.collapsed .problems-list {
+      display: none;
+    }
+
+    /* ── PROBLEM CARD (collapsed row) ── */
+    .problem-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      margin-bottom: var(--space-2);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .problem-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .problem-card.status-review {
+      border-left: 3px solid var(--review);
+    }
+
+    .problem-card.status-review2 {
+      border-left: 3px solid var(--warning);
+    }
+
+    .problem-card.status-mastered {
+      border-left: 3px solid var(--mastered);
+      opacity: 0.75;
+    }
+
+    /* Problem row (summary line) */
+    .problem-row {
+      display: grid;
+      grid-template-columns: 28px 1fr auto auto auto auto;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      cursor: pointer;
+    }
+
+    .problem-row:hover {
+      background: var(--surface-offset);
+    }
+
+    .check-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-2);
+      color: transparent;
+      flex-shrink: 0;
+    }
+
+    .check-btn:hover {
+      border-color: var(--success);
+    }
+
+    .problem-card.status-review .check-btn,
+    .problem-card.status-review2 .check-btn {
+      background: var(--review);
+      border-color: var(--review);
+      color: white;
+    }
+
+    .problem-card.status-mastered .check-btn {
+      background: var(--mastered);
+      border-color: var(--mastered);
+      color: white;
+    }
+
+    .problem-title-wrap {
+      min-width: 0;
+    }
+
+    .problem-name {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .problem-card.status-mastered .problem-name {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .diff-badge {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .diff-badge.easy {
+      color: var(--easy);
+      background: var(--easy-bg);
+    }
+
+    .diff-badge.medium {
+      color: var(--warning-dark);
+      background: var(--medium-bg);
+    }
+
+    .diff-badge.hard {
+      color: var(--hard);
+      background: var(--hard-bg);
+    }
+
+    .status-badge {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .status-badge.new {
+      color: var(--text-faint);
+      background: var(--surface-offset);
+    }
+
+    .status-badge.review {
+      color: var(--review);
+      background: var(--review-hl);
+    }
+
+    .status-badge.review2 {
+      color: var(--warning-dark);
+      background: var(--warning-hl);
+    }
+
+    .status-badge.mastered {
+      color: var(--mastered);
+      background: var(--mastered-hl);
+    }
+
+    .due-pill {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+      background: var(--warning-hl);
+      color: var(--warning-dark);
+      white-space: nowrap;
+    }
+
+    .due-pill.overdue {
+      background: var(--error-hl);
+      color: var(--error);
+    }
+
+    .expand-arrow {
+      color: var(--text-faint);
+      transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+
+    .problem-card.expanded .expand-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* ── DETAIL PANEL ── */
+    .detail-panel {
+      display: none;
+      border-top: 1px solid var(--divider);
+      background: var(--surface-2);
+      padding: var(--space-5) var(--space-6);
+    }
+
+    .problem-card.expanded .detail-panel {
+      display: block;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    @media(max-width:700px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .field-group.full {
+      grid-column: 1/-1;
+    }
+
+    .field-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .field-label svg {
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .field-input {
+      width: 100%;
+      padding: var(--space-2) var(--space-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--text);
+      outline: none;
+    }
+
+    .field-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px oklch(from var(--primary) l c h/0.12);
+    }
+
+    .field-input::placeholder {
+      color: var(--text-faint);
+    }
+
+    textarea.field-input {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.6;
+    }
+
+    textarea.field-input.tall {
+      min-height: 120px;
+    }
+
+    .mono-input {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    /* Tag input */
+    .tags-input-wrap {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      align-items: center;
+      padding: var(--space-2) var(--space-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: text;
+    }
+
+    .tags-input-wrap:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px oklch(from var(--primary) l c h/0.12);
+    }
+
+    .tag-chip {
+      font-size: var(--text-xs);
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+      background: var(--primary-hl);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+    }
+
+    .tag-chip button {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      opacity: 0.6;
+      font-size: 10px;
+      line-height: 1;
+    }
+
+    .tag-chip button:hover {
+      opacity: 1;
+    }
+
+    .tags-text-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: var(--text-xs);
+      color: var(--text);
+      flex: 1;
+      min-width: 80px;
+    }
+
+    /* Action row */
+    .detail-actions {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      flex-wrap: wrap;
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--divider);
+    }
+
+    .btn {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface-offset);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+      border-color: var(--success);
+    }
+
+    .btn-success:hover {
+      background: var(--success-hover);
+    }
+
+    .btn-review {
+      background: var(--review-hl);
+      color: var(--review);
+      border-color: var(--review);
+    }
+
+    .btn-review:hover {
+      background: var(--review);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning-hl);
+      color: var(--warning-dark);
+      border-color: var(--warning-dark);
+    }
+
+    .btn-warning:hover {
+      background: var(--warning-dark);
+      color: white;
+    }
+
+    .btn-ghost {
+      color: var(--error);
+      font-size: var(--text-xs);
+    }
+
+    .btn-ghost:hover {
+      color: var(--error);
+      text-decoration: underline;
+    }
+
+    .btn svg {
+      flex-shrink: 0;
+    }
+
+    .action-hint {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* Spaced rep info box */
+    .srs-box {
+      background: var(--surface-accent);
+      border: 1px solid var(--primary-hl);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+    }
+
+    .srs-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .srs-info {
+      flex: 1;
+    }
+
+    .srs-title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+    }
+
+    .srs-desc {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .srs-next {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: var(--space-2);
+    }
+
+    /* Attempt history */
+    .attempt-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .attempt-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+    }
+
+    .attempt-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .attempt-dot.solo {
+      background: var(--success);
+    }
+
+    .attempt-dot.helped {
+      background: var(--warning);
+    }
+
+    .attempt-date {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .attempt-type {
+      font-weight: 600;
+    }
+
+    .attempt-type.solo {
+      color: var(--success);
+    }
+
+    .attempt-type.helped {
+      color: var(--warning-dark);
+    }
+
+    .attempt-note {
+      color: var(--text-muted);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Empty state */
+    .empty-state {
+      padding: var(--space-16) var(--space-8);
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      margin: 0 auto var(--space-4);
+      color: var(--text-faint);
+    }
+
+    .empty-state p {
+      max-width: 36ch;
+      margin: 0 auto;
+    }
+
+    /* Burst animation */
+    @keyframes burst {
+      0% {
+        transform: scale(0);
+        opacity: 1
+      }
+
+      60% {
+        transform: scale(1.4);
+        opacity: 0.7
+      }
+
+      100% {
+        transform: scale(0);
+        opacity: 0
+      }
+    }
+
+    .burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      animation: burst 0.5s ease-out forwards;
+    }
+
+    /* Due badge on category */
+    .cat-due-badge {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      background: var(--warning-hl);
+      color: var(--warning-dark);
+    }
+
+    /* GH link */
+    .gh-link {
+      font-size: var(--text-xs);
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gh-link:hover {
+      text-decoration: underline;
+    }
+
+    @media(max-width:640px) {
+      header {
+        padding: var(--space-3) var(--space-4);
+      }
+
+      .progress-section,
+      .controls {
+        padding: var(--space-3) var(--space-4);
+      }
+
+      main {
+        padding: var(--space-4);
+      }
+
+      .problem-row {
+        grid-template-columns: 28px 1fr auto auto;
+      }
+
+      .problem-row .status-badge,
+      .problem-row .lc-id {
+        display: none;
+      }
+
+      .detail-panel {
+        padding: var(--space-4);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-label="NeetCode 150">
+          <rect x="2" y="2" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.9" />
+          <rect x="15" y="2" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.6" />
+          <rect x="2" y="15" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.6" />
+          <rect x="15" y="15" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.3" />
+          <path d="M6 7.5L8.5 10 13 5.5" stroke="white" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <div class="logo-text">NeetCode <span>150</span></div>
+      </div>
+      <div class="header-right">
+        <button class="text-btn" onclick="confirmReset()">Reset</button>
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- PROGRESS -->
+    <div class="progress-section">
+      <div class="stats-row">
+        <div class="stat total"><span class="stat-num" id="s-total">0</span><span class="stat-label">&nbsp;/ 150
+            attempted</span></div>
+        <div class="stat mastered-stat"><span class="stat-num" id="s-mastered">0</span><span
+            class="stat-label">&nbsp;mastered</span></div>
+        <div class="stat review-stat"><span class="stat-num" id="s-review">0</span><span class="stat-label">&nbsp;in
+            review</span></div>
+        <div class="stat due-stat"><span class="stat-num" id="s-due">0</span><span class="stat-label">&nbsp;due
+            today</span></div>
+      </div>
+      <div class="progress-bars">
+        <div class="progress-row">
+          <div class="progress-track">
+            <div class="progress-fill easy" id="prog-easy" style="width:0%"></div>
+            <div class="progress-fill medium" id="prog-med" style="width:0%"></div>
+            <div class="progress-fill hard" id="prog-hard" style="width:0%"></div>
+          </div>
+          <div class="progress-label" id="prog-label">0 / 150</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="search" id="search" placeholder="Search problems…" autocomplete="off">
+      </div>
+      <div class="filter-chips">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip due" data-filter="due">⏰ Due</button>
+        <button class="chip easy" data-filter="easy">Easy</button>
+        <button class="chip medium" data-filter="medium">Med</button>
+        <button class="chip hard" data-filter="hard">Hard</button>
+        <button class="chip mastered-chip" data-filter="mastered">✓ Mastered</button>
+        <button class="chip" data-filter="new">New</button>
+      </div>
+    </div>
+
+    <main id="main"></main>
+  </div>
+
+  <!-- MODAL: Log attempt -->
+  <div id="log-modal"
+    style="display:none;position:fixed;inset:0;z-index:500;background:oklch(0.1 0 0/0.5);display:none;align-items:center;justify-content:center;padding:var(--space-4);">
+    <div
+      style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-6);max-width:480px;width:100%;box-shadow:var(--shadow-lg);">
+      <h2 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-4);">Log Attempt</h2>
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-5);">Did you solve <strong
+          id="modal-prob-name"></strong> on your own?</p>
+      <div style="display:flex;gap:var(--space-3);">
+        <button class="btn btn-success" style="flex:1;" onclick="logAttempt(true)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20,6 9,17 4,12" />
+          </svg>
+          Solved solo
+        </button>
+        <button class="btn btn-warning" style="flex:1;" onclick="logAttempt(false)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4M12 16h.01" />
+          </svg>
+          Used solution
+        </button>
+      </div>
+      <button class="btn btn-outline" style="width:100%;margin-top:var(--space-3);"
+        onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // ── DATA ──
+    const PROBLEMS = [
+      {
+        cat: "Arrays & Hashing", icon: "🧩", problems: [
+          { id: 217, name: "Contains Duplicate", diff: "easy" },
+          { id: 242, name: "Valid Anagram", diff: "easy" },
+          { id: 1, name: "Two Sum", diff: "easy" },
+          { id: 49, name: "Group Anagrams", diff: "medium" },
+          { id: 347, name: "Top K Frequent Elements", diff: "medium" },
+          { id: 238, name: "Product of Array Except Self", diff: "medium" },
+          { id: 36, name: "Valid Sudoku", diff: "medium" },
+          { id: 271, name: "Encode and Decode Strings", diff: "medium" },
+          { id: 128, name: "Longest Consecutive Sequence", diff: "medium" },
+        ]
+      },
+      {
+        cat: "Two Pointers", icon: "👆", problems: [
+          { id: 125, name: "Valid Palindrome", diff: "easy" },
+          { id: 167, name: "Two Sum II", diff: "medium" },
+          { id: 15, name: "3Sum", diff: "medium" },
+          { id: 11, name: "Container With Most Water", diff: "medium" },
+          { id: 42, name: "Trapping Rain Water", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Sliding Window", icon: "🪟", problems: [
+          { id: 121, name: "Best Time to Buy & Sell Stock", diff: "easy" },
+          { id: 3, name: "Longest Substring Without Repeating Chars", diff: "medium" },
+          { id: 424, name: "Longest Repeating Character Replacement", diff: "medium" },
+          { id: 567, name: "Permutation in String", diff: "medium" },
+          { id: 76, name: "Minimum Window Substring", diff: "hard" },
+          { id: 239, name: "Sliding Window Maximum", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Stack", icon: "📚", problems: [
+          { id: 20, name: "Valid Parentheses", diff: "easy" },
+          { id: 155, name: "Min Stack", diff: "medium" },
+          { id: 150, name: "Evaluate Reverse Polish Notation", diff: "medium" },
+          { id: 22, name: "Generate Parentheses", diff: "medium" },
+          { id: 739, name: "Daily Temperatures", diff: "medium" },
+          { id: 853, name: "Car Fleet", diff: "medium" },
+          { id: 84, name: "Largest Rectangle in Histogram", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Binary Search", icon: "🔍", problems: [
+          { id: 704, name: "Binary Search", diff: "easy" },
+          { id: 74, name: "Search a 2D Matrix", diff: "medium" },
+          { id: 875, name: "Koko Eating Bananas", diff: "medium" },
+          { id: 153, name: "Find Minimum in Rotated Sorted Array", diff: "medium" },
+          { id: 33, name: "Search in Rotated Sorted Array", diff: "medium" },
+          { id: 981, name: "Time Based Key-Value Store", diff: "medium" },
+          { id: 4, name: "Median of Two Sorted Arrays", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Linked List", icon: "🔗", problems: [
+          { id: 206, name: "Reverse Linked List", diff: "easy" },
+          { id: 21, name: "Merge Two Sorted Lists", diff: "easy" },
+          { id: 143, name: "Reorder List", diff: "medium" },
+          { id: 19, name: "Remove Nth Node From End of List", diff: "medium" },
+          { id: 138, name: "Copy List with Random Pointer", diff: "medium" },
+          { id: 2, name: "Add Two Numbers", diff: "medium" },
+          { id: 141, name: "Linked List Cycle", diff: "easy" },
+          { id: 287, name: "Find the Duplicate Number", diff: "medium" },
+          { id: 146, name: "LRU Cache", diff: "medium" },
+          { id: 23, name: "Merge K Sorted Lists", diff: "hard" },
+          { id: 25, name: "Reverse Nodes in k-Group", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Trees", icon: "🌲", problems: [
+          { id: 226, name: "Invert Binary Tree", diff: "easy" },
+          { id: 104, name: "Maximum Depth of Binary Tree", diff: "easy" },
+          { id: 543, name: "Diameter of Binary Tree", diff: "easy" },
+          { id: 110, name: "Balanced Binary Tree", diff: "easy" },
+          { id: 100, name: "Same Tree", diff: "easy" },
+          { id: 572, name: "Subtree of Another Tree", diff: "easy" },
+          { id: 235, name: "Lowest Common Ancestor of BST", diff: "medium" },
+          { id: 102, name: "Binary Tree Level Order Traversal", diff: "medium" },
+          { id: 199, name: "Binary Tree Right Side View", diff: "medium" },
+          { id: 1448, name: "Count Good Nodes in Binary Tree", diff: "medium" },
+          { id: 98, name: "Validate Binary Search Tree", diff: "medium" },
+          { id: 230, name: "Kth Smallest Element in a BST", diff: "medium" },
+          { id: 105, name: "Construct Tree from Preorder & Inorder", diff: "medium" },
+          { id: 124, name: "Binary Tree Maximum Path Sum", diff: "hard" },
+          { id: 297, name: "Serialize and Deserialize Binary Tree", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Tries", icon: "🌳", problems: [
+          { id: 208, name: "Implement Trie (Prefix Tree)", diff: "medium" },
+          { id: 211, name: "Design Add and Search Words DS", diff: "medium" },
+          { id: 212, name: "Word Search II", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Heap / Priority Queue", icon: "⛰️", problems: [
+          { id: 703, name: "Kth Largest Element in a Stream", diff: "easy" },
+          { id: 1046, name: "Last Stone Weight", diff: "easy" },
+          { id: 973, name: "K Closest Points to Origin", diff: "medium" },
+          { id: 215, name: "Kth Largest Element in an Array", diff: "medium" },
+          { id: 621, name: "Task Scheduler", diff: "medium" },
+          { id: 355, name: "Design Twitter", diff: "medium" },
+          { id: 295, name: "Find Median from Data Stream", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Backtracking", icon: "↩️", problems: [
+          { id: 78, name: "Subsets", diff: "medium" },
+          { id: 39, name: "Combination Sum", diff: "medium" },
+          { id: 40, name: "Combination Sum II", diff: "medium" },
+          { id: 46, name: "Permutations", diff: "medium" },
+          { id: 90, name: "Subsets II", diff: "medium" },
+          { id: 79, name: "Word Search", diff: "medium" },
+          { id: 131, name: "Palindrome Partitioning", diff: "medium" },
+          { id: 17, name: "Letter Combinations of a Phone Number", diff: "medium" },
+          { id: 51, name: "N-Queens", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Graphs", icon: "🕸️", problems: [
+          { id: 200, name: "Number of Islands", diff: "medium" },
+          { id: 133, name: "Clone Graph", diff: "medium" },
+          { id: 695, name: "Max Area of Island", diff: "medium" },
+          { id: 417, name: "Pacific Atlantic Water Flow", diff: "medium" },
+          { id: 130, name: "Surrounded Regions", diff: "medium" },
+          { id: 994, name: "Rotting Oranges", diff: "medium" },
+          { id: 286, name: "Walls and Gates", diff: "medium" },
+          { id: 207, name: "Course Schedule", diff: "medium" },
+          { id: 210, name: "Course Schedule II", diff: "medium" },
+          { id: 684, name: "Redundant Connection", diff: "medium" },
+          { id: 323, name: "Number of Connected Components", diff: "medium" },
+          { id: 261, name: "Graph Valid Tree", diff: "medium" },
+          { id: 127, name: "Word Ladder", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Advanced Graphs", icon: "🔮", problems: [
+          { id: 332, name: "Reconstruct Itinerary", diff: "hard" },
+          { id: 1584, name: "Min Cost to Connect All Points", diff: "medium" },
+          { id: 743, name: "Network Delay Time", diff: "medium" },
+          { id: 778, name: "Swim in Rising Water", diff: "hard" },
+          { id: 269, name: "Alien Dictionary", diff: "hard" },
+          { id: 787, name: "Cheapest Flights Within K Stops", diff: "medium" },
+        ]
+      },
+      {
+        cat: "1-D Dynamic Programming", icon: "📐", problems: [
+          { id: 70, name: "Climbing Stairs", diff: "easy" },
+          { id: 746, name: "Min Cost Climbing Stairs", diff: "easy" },
+          { id: 198, name: "House Robber", diff: "medium" },
+          { id: 213, name: "House Robber II", diff: "medium" },
+          { id: 5, name: "Longest Palindromic Substring", diff: "medium" },
+          { id: 647, name: "Palindromic Substrings", diff: "medium" },
+          { id: 91, name: "Decode Ways", diff: "medium" },
+          { id: 322, name: "Coin Change", diff: "medium" },
+          { id: 152, name: "Maximum Product Subarray", diff: "medium" },
+          { id: 139, name: "Word Break", diff: "medium" },
+          { id: 300, name: "Longest Increasing Subsequence", diff: "medium" },
+          { id: 416, name: "Partition Equal Subset Sum", diff: "medium" },
+        ]
+      },
+      {
+        cat: "2-D Dynamic Programming", icon: "📊", problems: [
+          { id: 62, name: "Unique Paths", diff: "medium" },
+          { id: 1143, name: "Longest Common Subsequence", diff: "medium" },
+          { id: 309, name: "Best Time to Buy/Sell with Cooldown", diff: "medium" },
+          { id: 518, name: "Coin Change II", diff: "medium" },
+          { id: 494, name: "Target Sum", diff: "medium" },
+          { id: 97, name: "Interleaving String", diff: "medium" },
+          { id: 329, name: "Longest Increasing Path in Matrix", diff: "hard" },
+          { id: 115, name: "Distinct Subsequences", diff: "hard" },
+          { id: 72, name: "Edit Distance", diff: "medium" },
+          { id: 312, name: "Burst Balloons", diff: "hard" },
+          { id: 10, name: "Regular Expression Matching", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Greedy", icon: "💰", problems: [
+          { id: 53, name: "Maximum Subarray", diff: "medium" },
+          { id: 55, name: "Jump Game", diff: "medium" },
+          { id: 45, name: "Jump Game II", diff: "medium" },
+          { id: 134, name: "Gas Station", diff: "medium" },
+          { id: 846, name: "Hand of Straights", diff: "medium" },
+          { id: 1899, name: "Merge Triplets to Form Target Triplet", diff: "medium" },
+          { id: 763, name: "Partition Labels", diff: "medium" },
+          { id: 678, name: "Valid Parenthesis String", diff: "medium" },
+        ]
+      },
+      {
+        cat: "Intervals", icon: "📏", problems: [
+          { id: 57, name: "Insert Interval", diff: "medium" },
+          { id: 56, name: "Merge Intervals", diff: "medium" },
+          { id: 435, name: "Non-overlapping Intervals", diff: "medium" },
+          { id: 252, name: "Meeting Rooms", diff: "easy" },
+          { id: 253, name: "Meeting Rooms II", diff: "medium" },
+          { id: 1851, name: "Minimum Interval to Include Each Query", diff: "hard" },
+        ]
+      },
+      {
+        cat: "Math & Geometry", icon: "📐", problems: [
+          { id: 202, name: "Happy Number", diff: "easy" },
+          { id: 66, name: "Plus One", diff: "easy" },
+          { id: 50, name: "Pow(x, n)", diff: "medium" },
+          { id: 43, name: "Multiply Strings", diff: "medium" },
+          { id: 2013, name: "Detect Squares", diff: "medium" },
+          { id: 48, name: "Rotate Image", diff: "medium" },
+          { id: 54, name: "Spiral Matrix", diff: "medium" },
+          { id: 73, name: "Set Matrix Zeroes", diff: "medium" },
+        ]
+      },
+      {
+        cat: "Bit Manipulation", icon: "💾", problems: [
+          { id: 136, name: "Single Number", diff: "easy" },
+          { id: 191, name: "Number of 1 Bits", diff: "easy" },
+          { id: 338, name: "Counting Bits", diff: "easy" },
+          { id: 190, name: "Reverse Bits", diff: "easy" },
+          { id: 268, name: "Missing Number", diff: "easy" },
+          { id: 371, name: "Sum of Two Integers", diff: "medium" },
+          { id: 7, name: "Reverse Integer", diff: "medium" },
+        ]
+      },
+    ];
+
+    // ── STATE ──
+    // data[id] = {
+    //   status: 'new'|'review'|'review2'|'mastered',
+    //   nextReview: ISO date string or null,
+    //   attempts: [{date, solo, note}],
+    //   timeComplexity, spaceComplexity, explanation, techniques: [], githubUrl, notes
+    // }
+    let data = {};
+
+    function load() {
+      try { const s = localStorage.getItem('nc150v2'); if (s) data = JSON.parse(s); } catch (e) { }
+    }
+    function save() {
+      try { localStorage.setItem('nc150v2', JSON.stringify(data)); } catch (e) { }
+    }
+    function d(id) {
+      if (!data[id]) data[id] = { status: 'new', nextReview: null, attempts: [], timeComplexity: '', spaceComplexity: '', explanation: '', techniques: [], githubUrl: '', notes: '' };
+      return data[id];
+    }
+    function today() { return new Date().toISOString().split('T')[0]; }
+    function addDays(n) { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().split('T')[0]; }
+    function isDue(id) {
+      const rec = d(id);
+      if (rec.status === 'new') return false;
+      if (rec.status === 'mastered') return false;
+      if (!rec.nextReview) return false;
+      return rec.nextReview <= today();
+    }
+    function daysUntil(dateStr) {
+      if (!dateStr) return null;
+      const diff = Math.ceil((new Date(dateStr) - new Date(today())) / 86400000);
+      return diff;
+    }
+
+    // ── MODAL STATE ──
+    let modalProbId = null;
+    function openLogModal(id) {
+      modalProbId = id;
+      const prob = allProblems().find(p => p.id === id);
+      document.getElementById('modal-prob-name').textContent = prob ? prob.name : '';
+      document.getElementById('log-modal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('log-modal').style.display = 'none';
+      modalProbId = null;
+    }
+    function logAttempt(solo) {
+      if (!modalProbId) return;
+      const id = modalProbId;
+      const rec = d(id);
+      rec.attempts = rec.attempts || [];
+      rec.attempts.unshift({ date: today(), solo, note: '' });
+      if (solo) {
+        if (rec.status === 'new' || rec.status === 'review2') {
+          // First time solo OR graduated from daily review → schedule 2-week check
+          rec.status = 'review';
+          rec.nextReview = addDays(14);
+        } else if (rec.status === 'review') {
+          // Solved again after 2 weeks solo → mastered!
+          rec.status = 'mastered';
+          rec.nextReview = null;
+          spawnBurst(null, true);
+        }
+      } else {
+        // Used solution → must redo tomorrow
+        rec.status = 'review2';
+        rec.nextReview = addDays(1);
+      }
+      save();
+      closeModal();
+      renderAll();
+      updateStats();
+      expandCard(id);
+    }
+
+    function masteredDirect(id) {
+      if (!confirm('Mark as fully mastered?')) return;
+      const rec = d(id);
+      rec.status = 'mastered';
+      rec.nextReview = null;
+      save();
+      renderAll();
+      updateStats();
+      spawnBurst(null, false);
+    }
+
+    function resetProblem(id) {
+      if (!confirm('Reset this problem\'s progress?')) return;
+      delete data[id];
+      save();
+      renderAll();
+      updateStats();
+    }
+
+    function allProblems() { return PROBLEMS.flatMap(c => c.problems); }
+
+    // ── FIELD SAVE ──
+    function saveField(id, field, val) { d(id)[field] = val; save(); }
+
+    // ── TAG SYSTEM ──
+    function addTag(id, tag) {
+      tag = tag.trim();
+      if (!tag) return;
+      const rec = d(id);
+      rec.techniques = rec.techniques || [];
+      if (!rec.techniques.includes(tag)) rec.techniques.push(tag);
+      save();
+      renderTagsFor(id);
+    }
+    function removeTag(id, tag) {
+      const rec = d(id);
+      rec.techniques = (rec.techniques || []).filter(t => t !== tag);
+      save();
+      renderTagsFor(id);
+    }
+    function renderTagsFor(id) {
+      const wrap = document.getElementById('tags-' + id);
+      if (!wrap) return;
+      const rec = d(id);
+      const tags = rec.techniques || [];
+      const inputEl = wrap.querySelector('.tags-text-input');
+      const inputVal = inputEl ? inputEl.value : '';
+      wrap.innerHTML = tags.map(t => `<span class="tag-chip">${t}<button type="button" onclick="removeTag(${id},'${t.replace(/'/g, "\\'")}');event.stopPropagation()">×</button></span>`).join('');
+      const inp = document.createElement('input');
+      inp.className = 'tags-text-input'; inp.placeholder = 'Add technique…'; inp.value = inputVal;
+      inp.onkeydown = function (e) { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTag(id, this.value); this.value = ''; } if (e.key === 'Backspace' && !this.value && tags.length) { removeTag(id, tags[tags.length - 1]); } };
+      wrap.appendChild(inp);
+    }
+
+    // ── EXPAND / COLLAPSE CARDS ──
+    let expandedCards = new Set();
+    function toggleCard(id) { if (expandedCards.has(id)) { expandedCards.delete(id); } else { expandedCards.add(id); } renderCard(id); }
+    function expandCard(id) { expandedCards.add(id); renderCard(id); }
+    function renderCard(id) {
+      const card = document.querySelector(`.problem-card[data-id="${id}"]`);
+      if (!card) return;
+      const rec = d(id);
+      if (expandedCards.has(id)) { card.classList.add('expanded'); }
+      else { card.classList.remove('expanded'); }
+      updateCardClasses(card, rec);
+    }
+    function updateCardClasses(card, rec) {
+      card.className = 'problem-card';
+      if (['review', 'review2', 'mastered'].includes(rec.status)) card.classList.add('status-' + rec.status);
+      if (expandedCards.has(parseInt(card.dataset.id))) card.classList.add('expanded');
+    }
+
+    // ── FILTER / SEARCH ──
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    // ── RENDER ──
+    function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]/g, '-'); }
+
+    function statusLabel(id) {
+      const s = d(id).status;
+      if (s === 'new') return '<span class="status-badge new">New</span>';
+      if (s === 'review') return '<span class="status-badge review">2-Week Review</span>';
+      if (s === 'review2') return '<span class="status-badge review2">Daily Drill</span>';
+      if (s === 'mastered') return '<span class="status-badge mastered">✓ Mastered</span>';
+      return '';
+    }
+
+    function duePill(id) {
+      const rec = d(id);
+      if (rec.status === 'new' || rec.status === 'mastered') return '';
+      const n = daysUntil(rec.nextReview);
+      if (n === null) return '';
+      if (n <= 0) return '<span class="due-pill overdue">Due now!</span>';
+      if (n === 1) return '<span class="due-pill">Due tomorrow</span>';
+      if (n <= 3) return `<span class="due-pill">Due in ${n}d</span>`;
+      return '';
+    }
+
+    function srsBox(id) {
+      const rec = d(id);
+      if (rec.status === 'new') return `<div class="srs-box"><div class="srs-icon">🎯</div><div class="srs-info"><div class="srs-title">Not attempted yet</div><div class="srs-desc">Click "Log Attempt" after solving. If you solved it <strong>without help</strong>, you won't see it for <strong>2 weeks</strong>. If you used the solution, you'll redo it <strong>tomorrow</strong> until you can go solo.</div></div></div>`;
+      if (rec.status === 'review2') {
+        const n = daysUntil(rec.nextReview);
+        return `<div class="srs-box" style="border-color:var(--warning-hl);background:var(--warning-hl);"><div class="srs-icon">🔄</div><div class="srs-info"><div class="srs-title">Daily Drill — solve solo to advance</div><div class="srs-desc">You used the solution last time. Keep redoing this <strong>every day</strong> until you solve it completely on your own. Then it moves to the 2-week review.</div><div class="srs-next">${n !== null && n <= 0 ? '⏰ Due now!' : (n === 1 ? '📅 Due tomorrow' : `📅 Due in ${n} day(s)`)}</div></div></div>`;
+      }
+      if (rec.status === 'review') {
+        const n = daysUntil(rec.nextReview);
+        return `<div class="srs-box"><div class="srs-icon">⏳</div><div class="srs-info"><div class="srs-title">2-Week Review</div><div class="srs-desc">You solved this solo! Come back in 2 weeks and solve it again without help. If you can, it gets <strong>crossed off permanently</strong>.</div><div class="srs-next">${n !== null && n <= 0 ? '⏰ Review is due now!' : (n === 1 ? '📅 Review due tomorrow' : `📅 Review due in ${n} day(s)`)}</div></div></div>`;
+      }
+      if (rec.status === 'mastered') return `<div class="srs-box" style="border-color:var(--mastered);background:var(--mastered-hl);"><div class="srs-icon">🏆</div><div class="srs-info"><div class="srs-title">Mastered — never again!</div><div class="srs-desc">You solved this problem completely on your own at the 2-week mark. It's crossed off your list permanently.</div></div></div>`;
+      return '';
+    }
+
+    function attemptHistory(id) {
+      const rec = d(id);
+      const attempts = rec.attempts || [];
+      if (!attempts.length) return '<p style="font-size:var(--text-xs);color:var(--text-faint);font-style:italic;">No attempts logged yet.</p>';
+      return `<div class="attempt-list">${attempts.slice(0, 5).map(a => `
+    <div class="attempt-item">
+      <div class="attempt-dot ${a.solo ? 'solo' : 'helped'}"></div>
+      <span class="attempt-date">${a.date}</span>
+      <span class="attempt-type ${a.solo ? 'solo' : 'helped'}">${a.solo ? 'Solo' : 'With solution'}</span>
+    </div>`).join('')}</div>`;
+    }
+
+    function lcSlug(name) { return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+
+    function renderProblemDetail(p) {
+      const id = p.id;
+      const rec = d(id);
+      return `
+  <div class="detail-panel">
+    ${srsBox(id)}
+
+    <div class="detail-grid">
+
+      <div class="field-group">
+        <label class="field-label" for="tc-${id}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          Time Complexity
+        </label>
+        <input id="tc-${id}" class="field-input mono-input" type="text" placeholder="e.g. O(n log n)" value="${rec.timeComplexity || ''}" oninput="saveField(${id},'timeComplexity',this.value)">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="sc-${id}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Space Complexity
+        </label>
+        <input id="sc-${id}" class="field-input mono-input" type="text" placeholder="e.g. O(n)" value="${rec.spaceComplexity || ''}" oninput="saveField(${id},'spaceComplexity',this.value)">
+      </div>
+
+      <div class="field-group full">
+        <label class="field-label" for="tech-${id}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          Techniques & Algorithms Used
+        </label>
+        <div class="tags-input-wrap" id="tags-${id}" onclick="this.querySelector('.tags-text-input').focus()"></div>
+      </div>
+
+      <div class="field-group full">
+        <label class="field-label" for="exp-${id}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Solution Explanation
+        </label>
+        <textarea id="exp-${id}" class="field-input tall" placeholder="Explain the approach in your own words — key insight, steps, edge cases…" oninput="saveField(${id},'explanation',this.value)">${rec.explanation || ''}</textarea>
+      </div>
+
+      <div class="field-group full">
+        <label class="field-label" for="gh-${id}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub Link (your code)
+        </label>
+        <input id="gh-${id}" class="field-input" type="url" placeholder="https://github.com/your-username/…" value="${rec.githubUrl || ''}" oninput="saveField(${id},'githubUrl',this.value)">
+        ${rec.githubUrl ? `<a class="gh-link" href="${rec.githubUrl}" target="_blank" rel="noopener noreferrer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> View your code</a>` : ''}
+      </div>
+
+      <div class="field-group full">
+        <label class="field-label" for="notes-${id}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Additional Notes
+        </label>
+        <textarea id="notes-${id}" class="field-input" placeholder="Gotchas, similar problems, things to remember…" oninput="saveField(${id},'notes',this.value)">${rec.notes || ''}</textarea>
+      </div>
+
+      <div class="field-group full">
+        <div class="field-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Attempt History
+        </div>
+        ${attemptHistory(id)}
+      </div>
+    </div>
+
+    <div class="detail-actions">
+      <button class="btn btn-primary" onclick="openLogModal(${id});event.stopPropagation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+        Log Attempt
+      </button>
+      <a class="btn btn-outline" href="https://leetcode.com/problems/${lcSlug(p.name)}/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        LeetCode
+      </a>
+      <a class="btn btn-outline" href="https://neetcode.io/problems/${lcSlug(p.name)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">NeetCode</a>
+      ${rec.status === 'review' && isDue(id) ? `<button class="btn btn-success" onclick="masteredDirect(${id});event.stopPropagation()">✓ Mark Mastered</button>` : ''}
+      <button class="btn btn-ghost" onclick="resetProblem(${id});event.stopPropagation()">Reset</button>
+      <span class="action-hint">#${id}</span>
+    </div>
+  </div>`;
+    }
+
+    function renderAll() {
+      const main = document.getElementById('main');
+      const q = currentSearch.toLowerCase();
+      let anyVisible = false;
+
+      main.innerHTML = PROBLEMS.map(cat => {
+        const filtered = cat.problems.filter(p => {
+          const rec = d(p.id);
+          if (q && !p.name.toLowerCase().includes(q) && !String(p.id).includes(q)) return false;
+          if (currentFilter === 'easy' && p.diff !== 'easy') return false;
+          if (currentFilter === 'medium' && p.diff !== 'medium') return false;
+          if (currentFilter === 'hard' && p.diff !== 'hard') return false;
+          if (currentFilter === 'due' && !isDue(p.id)) return false;
+          if (currentFilter === 'mastered' && rec.status !== 'mastered') return false;
+          if (currentFilter === 'new' && rec.status !== 'new') return false;
+          return true;
+        });
+        if (!filtered.length) return '';
+        anyVisible = true;
+        const catSlug = slugify(cat.cat);
+        const doneCount = cat.problems.filter(p => d(p.id).status !== 'new').length;
+        const masteredCount = cat.problems.filter(p => d(p.id).status === 'mastered').length;
+        const total = cat.problems.length;
+        const pct = doneCount / total;
+        const circ = 2 * Math.PI * 14;
+        const dueInCat = cat.problems.filter(p => isDue(p.id)).length;
+
+        return `<section class="category" id="cat-${catSlug}">
+      <div class="category-header" onclick="toggleCat('${catSlug}')">
+        <span class="cat-icon">${cat.icon}</span>
+        <span class="cat-title">${cat.cat}</span>
+        <div class="cat-meta">
+          ${dueInCat > 0 ? `<span class="cat-due-badge">⏰ ${dueInCat}</span>` : ''}
+          <div class="cat-progress-ring">
+            <svg width="38" height="38" viewBox="0 0 38 38">
+              <circle class="ring-bg" cx="19" cy="19" r="14"/>
+              <circle class="ring-fill" cx="19" cy="19" r="14"
+                style="stroke-dasharray:${circ};stroke-dashoffset:${circ * (1 - pct)}"/>
+            </svg>
+            <div class="ring-label">${masteredCount}/${total}</div>
+          </div>
+          <svg class="collapse-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+      </div>
+      <div class="problems-list">
+        ${filtered.map(p => {
+          const rec = d(p.id);
+          const exp = expandedCards.has(p.id);
+          return `<div class="problem-card status-${rec.status}${exp ? ' expanded' : ''}" data-id="${p.id}">
+            <div class="problem-row" onclick="toggleCard(${p.id})">
+              <div class="check-wrap">
+                <div class="check-btn" aria-hidden="true">
+                  ${rec.status !== 'new' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>' : ''}
+                </div>
+              </div>
+              <div class="problem-title-wrap">
+                <div class="problem-name">${p.name}</div>
+              </div>
+              <span class="diff-badge ${p.diff}">${p.diff.charAt(0).toUpperCase() + p.diff.slice(1)}</span>
+              ${statusLabel(p.id)}
+              ${duePill(p.id)}
+              <svg class="expand-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+            </div>
+            ${renderProblemDetail(p)}
+          </div>`;
+        }).join('')}
+      </div>
+    </section>`;
+      }).join('');
+
+      if (!anyVisible) {
+        main.innerHTML = `<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><p>No problems match your filters.</p></div>`;
+      }
+
+      // Re-init tags
+      allProblems().forEach(p => { if (document.getElementById('tags-' + p.id)) renderTagsFor(p.id); });
+    }
+
+    function toggleCat(slug) { document.getElementById('cat-' + slug)?.classList.toggle('collapsed'); }
+
+    function updateStats() {
+      const all = allProblems();
+      let attempted = 0, mastered = 0, review = 0, due = 0, easy = 0, med = 0, hard = 0, easyM = 0, medM = 0, hardM = 0;
+      all.forEach(p => {
+        const rec = d(p.id);
+        if (rec.status !== 'new') attempted++;
+        if (rec.status === 'mastered') mastered++;
+        if (rec.status === 'review' || rec.status === 'review2') review++;
+        if (isDue(p.id)) due++;
+        if (rec.status === 'mastered') {
+          if (p.diff === 'easy') easy++;
+          else if (p.diff === 'medium') med++;
+          else hard++;
+        }
+        if (p.diff === 'easy') easyM++;
+        else if (p.diff === 'medium') medM++;
+        else hardM++;
+      });
+      document.getElementById('s-total').textContent = attempted;
+      document.getElementById('s-mastered').textContent = mastered;
+      document.getElementById('s-review').textContent = review;
+      document.getElementById('s-due').textContent = due;
+      document.getElementById('prog-easy').style.width = (easy / 150 * 100) + '%';
+      document.getElementById('prog-med').style.width = (med / 150 * 100) + '%';
+      document.getElementById('prog-hard').style.width = (hard / 150 * 100) + '%';
+      document.getElementById('prog-label').textContent = `${mastered} / 150 mastered`;
+    }
+
+    function spawnBurst(e, big) {
+      const colors = ['#437a22', '#4f98a3', '#e8af34', '#6daa45'];
+      const x = e ? e.clientX : window.innerWidth / 2;
+      const y = e ? e.clientY : window.innerHeight / 2;
+      const n = big ? 20 : 8;
+      for (let i = 0; i < n; i++) {
+        const el = document.createElement('div');
+        el.className = 'burst';
+        const sz = (big ? 8 : 4) + Math.random() * 10;
+        el.style.cssText = `left:${x + Math.random() * 100 - 50}px;top:${y + Math.random() * 100 - 50}px;width:${sz}px;height:${sz}px;background:${colors[Math.floor(Math.random() * colors.length)]};animation-delay:${Math.random() * 0.2}s`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 800);
+      }
+    }
+
+    function confirmReset() { if (confirm('Reset ALL progress?')) { data = {}; save(); expandedCards.clear(); renderAll(); updateStats(); } }
+
+    // Controls
+    document.getElementById('search').addEventListener('input', function () { currentSearch = this.value; renderAll(); });
+    document.querySelectorAll('.chip').forEach(btn => { btn.addEventListener('click', function () { document.querySelectorAll('.chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); currentFilter = this.dataset.filter; renderAll(); updateStats(); }); });
+
+    // Theme
+    (function () { const t = document.querySelector('[data-theme-toggle]'), r = document.documentElement; let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'; r.setAttribute('data-theme', d); t && t.addEventListener('click', () => { d = d === 'dark' ? 'light' : 'dark'; r.setAttribute('data-theme', d); t.innerHTML = d === 'dark' ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'; }); })();
+
+    // Close modal on backdrop click
+    document.getElementById('log-modal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+
+    // Init
+    load();
+    renderAll();
+    updateStats();
+  </script>
+</body>
+
+</html>
